@@ -251,6 +251,7 @@ class Window():
         playerNumEnt.grid(row = 0, column = 1, pady = 10)
         nextBtn = tk.Button(self.frame, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16), command = lambda: self.setPlayerNameScreen(playerNumEnt.get()))
         nextBtn.grid(row = 1, column = 0, pady = 10)
+        self.frame.pack()
 
     def setPlayerNameScreen(self, playerNum):
         pass
