@@ -246,7 +246,7 @@ class Window():
         self.frame.rowconfigure([0, 1, 2], weight = 1)
         self.frame.columnconfigure(0, weight = 1)
 
-        playerNumLbl = tk.Label(self.frame, text = "Number of players(5-11)", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+        playerNumLbl = tk.Label(self.frame, text = "Number of players(5-9)", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
         playerNumLbl.grid(row = 0, column = 0, pady = 10)
         playerNumEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
         playerNumEnt.grid(row = 1, column = 0, pady = 10)
@@ -255,8 +255,8 @@ class Window():
         self.frame.pack()
 
     def setPlayerNameScreen(self, playerNum):
-        self.titlelbl.destroy()
         self.playerNum = int(playerNum)
+        self.titlelbl.destroy()
         self.frame.destroy()
 
         self.frame = tk.Frame(self.window)
@@ -264,17 +264,28 @@ class Window():
         self.frame.rowconfigure([0, 1, 2], weight = 1)
         self.frame.columnconfigure(0, weight = 1)
 
+        lblList = []
+        entList = []
+
         for i in range(self.playerNum):
-            playerNumLbl = tk.Label(self.frame, text = f"Player {i+1}", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+            playerNumLbl = tk.Label(self.frame, text = f"Player {i+1} username", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
             playerNumLbl.grid(row = i, column = 0, pady = 10)
+            lblList.append(playerNumLbl)
 
         for i in range(self.playerNum):
-            playerNumEnt = tk.Label(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
+            playerNumEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
             playerNumEnt.grid(row = i, column = 1, pady = 10)
+            entList.append(playerNumEnt)
         self.frame.pack()
+        
+        print(lblList, entList)
 
-        playerNumEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
-        playerNumEnt.grid(row = 1, column = 0, pady = 10)
+        nextBtn = tk.Button(self.window, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16), command = lambda: self.test(entList))
+        nextBtn.pack(pady = 20)
+
+    def test(self, x):
+        for i in x:
+            print(i.get())
 
 if __name__ == "__main__":
     Window()
