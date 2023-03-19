@@ -11,6 +11,7 @@ class Window():
         self.registerBtn = tk.Button()
         self.removeAccountBtn = tk.Button()
         self.changePasswordBtn = tk.Button()
+        self.nextBtn = tk.Button()
         self.loginScreen()
 
     def loginCheck(self, username, password):
@@ -246,7 +247,7 @@ class Window():
         self.frame.rowconfigure([0, 1, 2], weight = 1)
         self.frame.columnconfigure(0, weight = 1)
 
-        playerNumLbl = tk.Label(self.frame, text = "Number of players(5-9)", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+        playerNumLbl = tk.Label(self.frame, text = "Number of players(5-9)", fg = "white", bg = "grey", width = 20, height = 1, font = ("Arial", 16))
         playerNumLbl.grid(row = 0, column = 0, pady = 10)
         playerNumEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
         playerNumEnt.grid(row = 1, column = 0, pady = 10)
@@ -261,31 +262,50 @@ class Window():
 
         self.frame = tk.Frame(self.window)
         self.frame.configure(bg = "grey")
-        self.frame.rowconfigure([0, 1, 2], weight = 1)
-        self.frame.columnconfigure(0, weight = 1)
-
-        lblList = []
+        self.frame.rowconfigure([0, 1, 2, 4, 5, 6, 7, 8], weight = 1)
+        self.frame.columnconfigure([0, 1], weight = 1)
+        
         entList = []
 
         for i in range(self.playerNum):
             playerNumLbl = tk.Label(self.frame, text = f"Player {i+1} username", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
             playerNumLbl.grid(row = i, column = 0, pady = 10)
-            lblList.append(playerNumLbl)
-
         for i in range(self.playerNum):
             playerNumEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
             playerNumEnt.grid(row = i, column = 1, pady = 10)
             entList.append(playerNumEnt)
         self.frame.pack()
-        
-        print(lblList, entList)
 
-        nextBtn = tk.Button(self.window, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16), command = lambda: self.test(entList))
-        nextBtn.pack(pady = 20)
+        self.nextBtn = tk.Button(self.window, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16), command = lambda: self.setFakeNameScreen(entList))
+        self.nextBtn.pack(pady = 20)
 
-    def test(self, x):
-        for i in x:
-            print(i.get())
+    def setFakeNameScreen(self, list):
+        usernameList = []
+        for i in list:
+            usernameList.append(i.get())
+
+        self.nextBtn.destroy()
+        self.frame.destroy()
+
+        self.frame = tk.Frame(self.window)
+        self.frame.configure(bg = "grey")
+        self.frame.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8], weight = 1)
+        self.frame.columnconfigure([0, 1], weight = 1)
+
+        for i in range(len(usernameList)):
+            playerNameLbl = tk.Label(self.frame, text = f"{usernameList[i]}", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+            playerNameLbl.grid(row = i, column = 0, pady = 10)
+        for i in range(self.playerNum):
+            fakeNameEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
+            fakeNameEnt.grid(row = i, column = 1, pady = 10) 
+        redHerringLbl = tk.Label(self.frame, text = f"Red herring", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+        redHerringLbl.grid(row = len(usernameList), column = 0, pady = 10)
+        redHerringEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
+        redHerringEnt.grid(row = len(usernameList), column = 1, pady = 10) 
+        self.frame.pack()
+
+        self.nextBtn = tk.Button(self.window, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16))
+        self.nextBtn.pack(pady = 20)
 
 if __name__ == "__main__":
     Window()
