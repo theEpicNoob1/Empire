@@ -280,9 +280,9 @@ class Window():
         self.nextBtn.pack(pady = 20)
 
     def setFakeNameScreen(self, list):
-        usernameList = []
+        self.usernameList = []
         for i in list:
-            usernameList.append(i.get())
+            self.usernameList.append(i.get())
 
         self.nextBtn.destroy()
         self.frame.destroy()
@@ -292,20 +292,31 @@ class Window():
         self.frame.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8], weight = 1)
         self.frame.columnconfigure([0, 1], weight = 1)
 
-        for i in range(len(usernameList)):
-            playerNameLbl = tk.Label(self.frame, text = f"{usernameList[i]}", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+        entList = []
+
+        for i in range(len(self.usernameList)):
+            playerNameLbl = tk.Label(self.frame, text = f"{self.usernameList[i]}", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
             playerNameLbl.grid(row = i, column = 0, pady = 10)
         for i in range(self.playerNum):
             fakeNameEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
-            fakeNameEnt.grid(row = i, column = 1, pady = 10) 
-        redHerringLbl = tk.Label(self.frame, text = f"Red herring", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
-        redHerringLbl.grid(row = len(usernameList), column = 0, pady = 10)
+            fakeNameEnt.grid(row = i, column = 1, pady = 10)
+            entList.append(fakeNameEnt) 
+        redHerringLbl = tk.Label(self.frame, text = "Red herring", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+        redHerringLbl.grid(row = len(self.usernameList), column = 0, pady = 10)
         redHerringEnt = tk.Entry(self.frame, fg = "black", bg = "white", width = 15, font = ("Arial", 16))
-        redHerringEnt.grid(row = len(usernameList), column = 1, pady = 10) 
+        redHerringEnt.grid(row = len(self.usernameList), column = 1, pady = 10) 
+        entList.append(redHerringEnt)
         self.frame.pack()
 
-        self.nextBtn = tk.Button(self.window, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16))
+        self.nextBtn = tk.Button(self.window, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16), command = lambda: self.initialisation(entList))
         self.nextBtn.pack(pady = 20)
+
+    def initialisation(self, list):
+        self.fakeNameList = []
+        for i in list:
+            self.fakeNameList.append(i.get())
+
+        
 
 if __name__ == "__main__":
     Window()
