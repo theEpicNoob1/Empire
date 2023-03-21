@@ -4,6 +4,7 @@ import query
 class Window():
     def __init__(self):
         self.playerNum = 0
+        self.empireIDs = []
         self.window = tk.Tk()
         self.window.geometry("800x600")
         self.window.title("Empire")
@@ -15,7 +16,7 @@ class Window():
         self.loginScreen()
 
     def loginCheck(self, username, password):
-        self.userData = query.userData(username)
+        self.userData = query.userData((username, ))
         print(self.userData)
         if self.userData == None:
             print("Login failed, username does not exist")
@@ -316,7 +317,20 @@ class Window():
         for i in list:
             self.fakeNameList.append(i.get())
 
-        
+        query.initialiseGame((self.userData[0], ))
+        self.gameData = query.gameData((self.userData[0], ))
+        print(self.gameData)
+        query.initialiseEmpire(self.usernameList, self.gameData[0])
+        self.empireData = query.empireData((self.gameData[0], ))
+        print(self.empireData)
+        for i in self.empireData:
+            self.empireIDs.append(i[0])
+        query.initialisePlayers(self.usernameList, self.fakeNameList, self.gameData[0], self.empireIDs)
+        self.playerData = query.playerData((self.gameData[0], ))
+        print(self.playerData)
+
+        self.frame.destroy()
+        self.nextBtn.destroy()
 
 if __name__ == "__main__":
     Window()

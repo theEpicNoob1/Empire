@@ -35,6 +35,8 @@ def createAccountTable():
             Occupation text,
             YearClass text,
             Score integer,
+            GamesPlayed integer,
+            GamesWon integer,
             primary key(AccountID))"""
     createTable(db_name, "Account", sql)
 
