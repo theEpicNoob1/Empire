@@ -83,7 +83,12 @@ def playerData(gameID):
         playerData = cursor.fetchall()
         return playerData
 
-
+def removeGame(gameID):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("DELETE FROM Games WHERE GameID=?", gameID)
+        db.commit()
 
 def createGamesTable():
     with sqlite3.connect("empire.db") as db:
@@ -130,7 +135,8 @@ def createPlayersTable():
 if __name__ == "__main__":
     #data = ("NoobMaster69", 12345, "Paul", "Jennings", "Teacher", "Teacher", 0, 0, 0)
     #registerAccount(data)
-    createGamesTable()
-    createEmpiresTable()
-    createPlayersTable()
+    #createGamesTable()
+    #createEmpiresTable()
+    #createPlayersTable()
+    #removeGame((1, ))
     pass

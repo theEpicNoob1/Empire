@@ -319,18 +319,37 @@ class Window():
 
         query.initialiseGame((self.userData[0], ))
         self.gameData = query.gameData((self.userData[0], ))
-        print(self.gameData)
         query.initialiseEmpire(self.usernameList, self.gameData[0])
         self.empireData = query.empireData((self.gameData[0], ))
-        print(self.empireData)
         for i in self.empireData:
             self.empireIDs.append(i[0])
         query.initialisePlayers(self.usernameList, self.fakeNameList, self.gameData[0], self.empireIDs)
         self.playerData = query.playerData((self.gameData[0], ))
-        print(self.playerData)
 
+        self.displayFakeNames()
+
+    def displayFakeNames(self):
         self.frame.destroy()
         self.nextBtn.destroy()
+
+        self.frame = tk.Frame(self.window)
+        self.frame.configure(bg = "grey")
+        self.frame.rowconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8], weight = 1)
+        self.frame.columnconfigure([0, 1], weight = 1)
+
+        tk.Label(self.frame, text = f"Fake names", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16)).grid(row = 0, column = 0, pady = 10)
+
+        for i in range(len(self.fakeNameList)):
+            fakeNameLbl = tk.Label(self.frame, text = f"{self.fakeNameList[i]}", fg = "white", bg = "grey", width = 15, height = 1, font = ("Arial", 16))
+            fakeNameLbl.grid(row = i + 1, column = 0, pady = 10)
+        nextBtn = tk.Button(self.frame, text = "Next", fg = "white", bg = "blue", width = 15, height = 1, font = ("Arial", 16), command = self.playerTurn)
+        nextBtn.grid(row = len(self.fakeNameList) + 1, column = 0, pady = 10)
+
+        self.frame.pack()
+
+    def playerTurn(self):
+        self.frame
+
 
 if __name__ == "__main__":
     Window()
