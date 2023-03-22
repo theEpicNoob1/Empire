@@ -90,6 +90,52 @@ def removeGame(gameID):
         cursor.execute("DELETE FROM Games WHERE GameID=?", gameID)
         db.commit()
 
+def checkGuess(username):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("SELECT FakeName FROM Players WHERE PlayerName=?", username)
+        fakeName = cursor.fetchone()
+        return fakeName
+    
+def empireID(playerName):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("SELECT EmpireID FROM Players WHERE PlayerName=?", playerName)
+        empireID = cursor.fetchone()
+        return empireID
+
+def updateEmpires(empireID, playerName):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("UPDATE Players SET EmpireID=? WHERE PlayerName=?", (empireID, playerName))
+        db.commit()
+
+def removeEmpire(empireName):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("DELETE FROM Empires WHERE EmpireName=?", empireName)
+        db.commit()
+
+def playersInEmpire(empireID):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("SELECT PlayerName FROM Players WHERE EmpireID=?", empireID)
+        playerName = cursor.fetchall()
+        return playerName
+    
+def empireName(empireID):
+    with sqlite3.connect("empire.db") as db:
+        cursor = db.cursor()
+        cursor.execute("PRAGMA foreign_keys = ON")
+        cursor.execute("SELECT EmpireName FROM Empires WHERE EmpireID=?", empireID)
+        empireName = cursor.fetchone()
+        return empireName
+
 def createGamesTable():
     with sqlite3.connect("empire.db") as db:
         cursor = db.cursor()
@@ -132,11 +178,14 @@ def createPlayersTable():
         cursor.execute(sql)
         db.commit()
 
+
+
 if __name__ == "__main__":
-    #data = ("NoobMaster69", 12345, "Paul", "Jennings", "Teacher", "Teacher", 0, 0, 0)
+    #data = ("2", "b", "Paul", "Jennings", "Teacher", "Teacher", 0, 0, 0)
     #registerAccount(data)
     #createGamesTable()
     #createEmpiresTable()
     #createPlayersTable()
-    #removeGame((1, ))
+    for i in range(100):
+        removeGame((i, ))
     pass
